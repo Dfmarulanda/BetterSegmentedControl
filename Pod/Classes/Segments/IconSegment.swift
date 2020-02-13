@@ -20,7 +20,8 @@ open class IconSegment: BetterSegmentedControlSegment {
     
     public var normalIconTintColor: UIColor
     public var normalBackgroundColor: UIColor
-    
+  
+
     public var selectedIconTintColor: UIColor
     public var selectedBackgroundColor: UIColor
     
@@ -30,9 +31,8 @@ open class IconSegment: BetterSegmentedControlSegment {
                 normalBackgroundColor: UIColor? = nil,
                 normalIconTintColor: UIColor,
                 selectedBackgroundColor: UIColor? = nil,
-                selectedIconTintColor: UIColor,
-                iconRenderingMode:UIImage.RenderingMode) {
-        self.icon = icon.withRenderingMode(iconRenderingMode)
+                selectedIconTintColor: UIColor) {
+        self.icon = icon
         self.iconSize = iconSize
         self.normalBackgroundColor = normalBackgroundColor ?? DefaultValues.normalBackgroundColor
         self.normalIconTintColor = normalIconTintColor
@@ -45,21 +45,25 @@ open class IconSegment: BetterSegmentedControlSegment {
         return createView(withIcon: icon,
                           iconSize: iconSize,
                           backgroundColor: normalBackgroundColor,
-                          iconTintColor: normalIconTintColor)
+                          iconTintColor: normalIconTintColor,
+                          renderingMode: .alwaysTemplate)
     }()
     public lazy var selectedView: UIView = {
        return createView(withIcon: icon,
                          iconSize: iconSize,
                          backgroundColor: selectedBackgroundColor,
-                         iconTintColor: selectedIconTintColor)
+                         iconTintColor: selectedIconTintColor,
+                         renderingMode: .alwaysOriginal)
     }()
     private func createView(withIcon icon: UIImage,
                             iconSize: CGSize,
                             backgroundColor: UIColor,
-                            iconTintColor: UIColor) -> UIView {
+                            iconTintColor: UIColor,
+                            renderingMode: UIImage.RenderingMode) -> UIView {
         let view = UIView()
         view.backgroundColor = backgroundColor
-        let imageView = UIImageView(image: icon)
+        let iconRendered =  icon.withRenderingMode(renderingMode)
+        let imageView = UIImageView(image: iconRendered)
         imageView.frame = CGRect(x: 0,
                                  y: 0,
                                  width: iconSize.width,
@@ -89,8 +93,6 @@ public extension IconSegment {
                         normalBackgroundColor: normalBackgroundColor,
                         normalIconTintColor: normalIconTintColor,
                         selectedBackgroundColor: selectedBackgroundColor,
-                        selectedIconTintColor: selectedIconTintColor,
-                        iconRenderingMode: iconRenderingMode)
-        }
+                        selectedIconTintColor: selectedIconTintColor)        }
     }
 }
