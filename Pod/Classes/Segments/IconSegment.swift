@@ -30,8 +30,9 @@ open class IconSegment: BetterSegmentedControlSegment {
                 normalBackgroundColor: UIColor? = nil,
                 normalIconTintColor: UIColor,
                 selectedBackgroundColor: UIColor? = nil,
-                selectedIconTintColor: UIColor) {
-        self.icon = icon.withRenderingMode(.alwaysTemplate)
+                selectedIconTintColor: UIColor,
+                iconRenderingMode:UIImage.RenderingMode) {
+        self.icon = icon.withRenderingMode(iconRenderingMode)
         self.iconSize = iconSize
         self.normalBackgroundColor = normalBackgroundColor ?? DefaultValues.normalBackgroundColor
         self.normalIconTintColor = normalIconTintColor
@@ -80,14 +81,16 @@ public extension IconSegment {
                         normalBackgroundColor: UIColor? = nil,
                         normalIconTintColor: UIColor,
                         selectedBackgroundColor: UIColor? = nil,
-                        selectedIconTintColor: UIColor) -> [BetterSegmentedControlSegment] {
+                        selectedIconTintColor: UIColor,
+                        iconRenderingMode: UIImage.RenderingMode) -> [BetterSegmentedControlSegment] {
         return icons.map {
             IconSegment(icon: $0,
                         iconSize: iconSize,
                         normalBackgroundColor: normalBackgroundColor,
                         normalIconTintColor: normalIconTintColor,
                         selectedBackgroundColor: selectedBackgroundColor,
-                        selectedIconTintColor: selectedIconTintColor)
+                        selectedIconTintColor: selectedIconTintColor,
+                        iconRenderingMode: iconRenderingMode)
         }
     }
 }
